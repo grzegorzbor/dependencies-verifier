@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>dependencies</groupId>
+    <artifactId>verifier</artifactId>
+    <version>0.1</version>
+    <description>
+        The aim of this module is to let you define and automatically verify the structure of the packages in your project,
+        by defining the rules of allowed dependencies between your packages.
+        For example, if you define that package A is allowed to be dependent on packages B and C,
+        and package B is allowed to depend on packages C and D, then after running the verification, it will report
+        all violations (e.g. package C found to depend on package A). This way you may keep control of the package structure,
+        prevent circular dependencies, and enforce more careful design of packages and placement of classes,
+        instead of observing new classes getting put into random packages (as it often happens in a typical project).
+
+        This is a very crude implementation; more a proof of concept than a production ready code.
+        Just a single class, with no tests.
+
+        Potential future work:
+        0. Tests!
+        1. Assert configuration doesn't allow circular dependencies
+        2. Allow generating a graph of allowed dependencies
+        3. More friendly and powerful configuration - don't rely on the properties file, but maybe use XML/DSL/other
+        4. Allow wildcards in configuration
+        5. Allow more semantic dependencies (e.g. "package A implements package B" implies B depends on A, not other way round)
+        6. Automatically ignore dependencies on any packages which are not part of project source code
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>jdepend</groupId>
+            <artifactId>jdepend</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
